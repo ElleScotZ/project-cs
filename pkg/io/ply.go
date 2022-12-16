@@ -22,6 +22,8 @@ func ImportPLY(fileName string) (*core.Mesh, error) {
 	const (
 		header = "end_header"
 		vertex = "element vertex"
+		normal = "property float nx"
+		colour = "property uchar red"
 	)
 
 	file, err := os.Open(fileName)
@@ -32,10 +34,12 @@ func ImportPLY(fileName string) (*core.Mesh, error) {
 	defer file.Close()
 
 	var (
-		mesh       core.Mesh
-		endHeader  bool = false
-		lineNumber int
-		scanner    = bufio.NewScanner(file)
+		mesh           core.Mesh
+		endHeader      bool = false
+		lineNumber     int
+		colorIncluded  bool
+		normalIncluded bool
+		scanner        = bufio.NewScanner(file)
 	)
 
 	// Reading in the header
@@ -47,6 +51,10 @@ func ImportPLY(fileName string) (*core.Mesh, error) {
 		switch {
 		case strings.Contains(line, vertex):
 			vertexNumber, _ = strconv.Atoi(line[len(vertex)+1:])
+		case strings.Contains(line, normal):
+			normalIncluded = true
+		case strings.Contains(line, colour):
+			colorIncluded = true
 		case strings.Contains(line, header):
 			endHeader = true
 			lineNumber = 0
@@ -86,9 +94,53 @@ func ImportPLY(fileName string) (*core.Mesh, error) {
 				return &mesh, err
 			}
 
-			vertex := algebra.Vector3D{Position: [3]float64{posX, posY, posZ}}
+			vertex := core.Vertex{Position: algebra.Vector3D{Coordinates: [3]float64{posX, posY, posZ}}}
 
-			mesh.Vertices = append(mesh.Vertices, &vertex)
+			if normalIncluded {
+				if len(coordinates) < 6 {
+					return nil, errors.New("invalid PLY file")
+				}
+
+				normX, err := strconv.ParseFloat(coordinates[3], 64)
+				if err != nil {
+					return &mesh, err
+				}
+
+				normY, err := strconv.ParseFloat(coordinates[4], 64)
+				if err != nil {
+					return &mesh, err
+				}
+
+				normZ, err := strconv.ParseFloat(coordinates[5], 64)
+				if err != nil {
+					return &mesh, err
+				}
+
+				vertex.Normal = algebra.Vector3D{Coordinates: [3]float64{normX, normY, normZ}}
+			}
+
+			if colorIncluded {
+				if len(coordinates) == 3 {
+					return nil, errors.New("invalid PLY file")
+				}
+
+				colR, err7 := strconv.ParseFloat(coordinates[size-3], 64)
+				colG, err8 := strconv.ParseFloat(coordinates[size-2], 64)
+				colB, err9 := strconv.ParseFloat(coordinates[size-1], 64)
+
+				switch {
+				case err7 != nil:
+					return &mesh, err7
+				case err8 != nil:
+					return &mesh, err8
+				case err9 != nil:
+					return &mesh, err9
+				}
+
+				vertex.Color = algebra.Vector3D{Coordinates: [3]float64{colR, colG, colB}}
+			}
+
+			mesh.Vertices = append(mesh.Vertices, vertex)
 
 		case lineNumber > vertexNumber:
 			faceString := strings.Split(line, " ")
@@ -105,7 +157,7 @@ func ImportPLY(fileName string) (*core.Mesh, error) {
 				Vertices: [3]int{vertex1, vertex2, vertex3},
 			}
 
-			mesh.Faces = append(mesh.Faces, &face)
+			mesh.Faces = append(mesh.Faces, face)
 		}
 	}
 
@@ -122,7 +174,7 @@ func ExportPLY(m *core.Mesh, fileName string) error {
 	defer file.Close()
 
 	// Every PLY file header
-	_, err = file.WriteString("ply\nformat ascii 1.0\ncomment omitted\n")
+	_, err = file.WriteString("ply\nformat ascii 1.0\ncomment nothing at all\n")
 	if err != nil {
 		return err
 	}
@@ -133,6 +185,16 @@ func ExportPLY(m *core.Mesh, fileName string) error {
 	}
 
 	_, err = file.WriteString("property float x\nproperty float y\nproperty float z\n")
+	if err != nil {
+		return err
+	}
+
+	_, err = file.WriteString("property float nx\nproperty float ny\nproperty float nz\n")
+	if err != nil {
+		return err
+	}
+
+	_, err = file.WriteString("property uchar red\nproperty uchar green\nproperty uchar blue\n")
 	if err != nil {
 		return err
 	}
@@ -148,11 +210,29 @@ func ExportPLY(m *core.Mesh, fileName string) error {
 	}
 
 	for _, v := range m.Vertices {
-		X := strconv.FormatFloat(v.Position[0], 'f', -1, 32)
-		Y := strconv.FormatFloat(v.Position[1], 'f', -1, 32)
-		Z := strconv.FormatFloat(v.Position[2], 'f', -1, 32)
+		X := strconv.FormatFloat(v.Position.Coordinates[0], 'f', -1, 32)
+		Y := strconv.FormatFloat(v.Position.Coordinates[1], 'f', -1, 32)
+		Z := strconv.FormatFloat(v.Position.Coordinates[2], 'f', -1, 32)
 
 		_, err := file.WriteString(X + " " + Y + " " + Z)
+		if err != nil {
+			return err
+		}
+
+		nX := strconv.FormatFloat(v.Normal.Coordinates[0], 'f', -1, 32)
+		nY := strconv.FormatFloat(v.Normal.Coordinates[1], 'f', -1, 32)
+		nZ := strconv.FormatFloat(v.Normal.Coordinates[2], 'f', -1, 32)
+
+		_, err = file.WriteString(" " + nX + " " + nY + " " + nZ)
+		if err != nil {
+			return err
+		}
+
+		cX := strconv.FormatFloat(v.Color.Coordinates[0], 'f', -1, 32)
+		cY := strconv.FormatFloat(v.Color.Coordinates[1], 'f', -1, 32)
+		cZ := strconv.FormatFloat(v.Color.Coordinates[2], 'f', -1, 32)
+
+		_, err = file.WriteString(" " + cX + " " + cY + " " + cZ)
 		if err != nil {
 			return err
 		}

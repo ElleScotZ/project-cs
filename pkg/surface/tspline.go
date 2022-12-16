@@ -4,6 +4,8 @@ import (
 	"errors"
 
 	"github.com/ElleScotZ/project-cs/internal/algebra"
+	"github.com/ElleScotZ/project-cs/internal/core"
+	"github.com/ElleScotZ/project-cs/pkg/io"
 )
 
 // Knot represents a knot in the parametrised 2D space on a T-mesh.
@@ -112,4 +114,35 @@ func (t *TSpline) CalculateTSplineSurfacePoint(paramS, paramT float64) (algebra.
 	position = position.Div(divisor)
 
 	return position, nil
+}
+
+//
+func (t *TSpline) GenerateSurface(resolution [2]int, fileName string) error {
+	var mesh core.Mesh
+
+	for _, cp := range t.ControlPoints {
+		mesh.Vertices = append(mesh.Vertices, core.Vertex{
+			Position: cp.Position,
+			Color:    algebra.Vector3D{Coordinates: [3]float64{150, 0, 0}},
+		})
+	}
+
+	parameters1 := core.DistributeInterval(resolution[0])
+	parameters2 := core.DistributeInterval(resolution[1])
+
+	for _, p1 := range parameters1 {
+		for _, p2 := range parameters2 {
+			point, err := t.CalculateTSplineSurfacePoint(p1, p2)
+			if err != nil {
+				return err
+			}
+
+			mesh.Vertices = append(mesh.Vertices, core.Vertex{
+				Position: point,
+				Color:    algebra.Vector3D{Coordinates: [3]float64{0, 150, 0}},
+			})
+		}
+	}
+
+	return io.ExportPLY(&mesh, fileName)
 }
