@@ -166,7 +166,7 @@ func ImportPLY(fileName string) (*core.Mesh, error) {
 
 // ExportPLY method writes out PLY files with fileName.
 func ExportPLY(m *core.Mesh, fileName string) error {
-	file, err := os.Create(fileName)
+	file, err := os.Create(fileName + ".ply")
 	if err != nil {
 		return err
 	}

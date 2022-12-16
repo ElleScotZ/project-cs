@@ -2,10 +2,16 @@ package surface
 
 import (
 	"errors"
+	"os"
 
 	"github.com/ElleScotZ/project-cs/internal/algebra"
 	"github.com/ElleScotZ/project-cs/internal/core"
 	"github.com/ElleScotZ/project-cs/pkg/io"
+)
+
+const (
+	//
+	outFolder = "../../out"
 )
 
 // Knot represents a knot in the parametrised 2D space on a T-mesh.
@@ -118,6 +124,11 @@ func (t *TSpline) CalculateTSplineSurfacePoint(paramS, paramT float64) (algebra.
 
 //
 func (t *TSpline) GenerateSurface(resolution [2]int, fileName string) error {
+	err := os.MkdirAll(outFolder, os.ModePerm)
+	if err != nil {
+		return err
+	}
+
 	var mesh core.Mesh
 
 	for _, cp := range t.ControlPoints {
@@ -144,5 +155,31 @@ func (t *TSpline) GenerateSurface(resolution [2]int, fileName string) error {
 		}
 	}
 
-	return io.ExportPLY(&mesh, fileName)
+	return io.ExportPLY(&mesh, outFolder+"/"+fileName)
+}
+
+//
+func (t *TSpline) GenerateTMesh(fileName string) error {
+	err := os.MkdirAll(outFolder, os.ModePerm)
+	if err != nil {
+		return err
+	}
+
+	var mesh core.Mesh
+
+	for _, cp := range t.ControlPoints {
+		mesh.Vertices = append(mesh.Vertices, core.Vertex{
+			Position: cp.Position,
+			Color:    algebra.Vector3D{Coordinates: [3]float64{150, 0, 0}},
+		})
+	}
+
+	for _, cp := range t.ControlPoints {
+		mesh.Vertices = append(mesh.Vertices, core.Vertex{
+			Position: algebra.Vector3D{Coordinates: [3]float64{cp.Knotvector[2].Position[0], cp.Knotvector[2].Position[1], 0}},
+			Color:    algebra.Vector3D{Coordinates: [3]float64{0, 0, 150}},
+		})
+	}
+
+	return io.ExportPLY(&mesh, outFolder+"/"+fileName)
 }
