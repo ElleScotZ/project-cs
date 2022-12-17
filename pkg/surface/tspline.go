@@ -2,16 +2,10 @@ package surface
 
 import (
 	"errors"
-	"os"
 
 	"github.com/ElleScotZ/project-cs/internal/algebra"
 	"github.com/ElleScotZ/project-cs/internal/core"
 	"github.com/ElleScotZ/project-cs/pkg/io"
-)
-
-const (
-	//
-	outFolder = "../../out"
 )
 
 // Knot represents a knot in the parametrised 2D space on a T-mesh.
@@ -124,11 +118,6 @@ func (t *TSpline) CalculateTSplineSurfacePoint(paramS, paramT float64) (algebra.
 
 //
 func (t *TSpline) GenerateSurface(resolution [2]int, fileName string) error {
-	err := os.MkdirAll(outFolder, os.ModePerm)
-	if err != nil {
-		return err
-	}
-
 	var mesh core.Mesh
 
 	for _, cp := range t.ControlPoints {
@@ -155,16 +144,11 @@ func (t *TSpline) GenerateSurface(resolution [2]int, fileName string) error {
 		}
 	}
 
-	return io.ExportPLY(&mesh, outFolder+"/"+fileName)
+	return io.ExportPLY(&mesh, fileName)
 }
 
 //
 func (t *TSpline) GenerateTMesh(fileName string) error {
-	err := os.MkdirAll(outFolder, os.ModePerm)
-	if err != nil {
-		return err
-	}
-
 	var mesh core.Mesh
 
 	for _, cp := range t.ControlPoints {
@@ -181,5 +165,5 @@ func (t *TSpline) GenerateTMesh(fileName string) error {
 		})
 	}
 
-	return io.ExportPLY(&mesh, outFolder+"/"+fileName)
+	return io.ExportPLY(&mesh, fileName)
 }

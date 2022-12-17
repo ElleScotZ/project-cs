@@ -11,6 +11,11 @@ import (
 	"github.com/ElleScotZ/project-cs/internal/core"
 )
 
+const (
+	//
+	outFolder = "out/"
+)
+
 // ImportPLY method reads in PLY files with fileName.
 // fileName requirements: ending .ply.
 // About PLY files: http://paulbourke.net/dataformats/ply/
@@ -166,7 +171,12 @@ func ImportPLY(fileName string) (*core.Mesh, error) {
 
 // ExportPLY method writes out PLY files with fileName.
 func ExportPLY(m *core.Mesh, fileName string) error {
-	file, err := os.Create(fileName + ".ply")
+	err := os.MkdirAll("out", os.ModePerm)
+	if err != nil {
+		return err
+	}
+
+	file, err := os.Create(outFolder + fileName + ".ply")
 	if err != nil {
 		return err
 	}
