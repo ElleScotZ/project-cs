@@ -6,11 +6,6 @@ import (
 	"github.com/ElleScotZ/project-cs/pkg/io"
 )
 
-// Knot represents a knot in the parametrised 2D space on a T-mesh.
-type Knot struct {
-	Position [2]float64 // [0]: horizontal coordinate, [1]: vertical coordinate
-}
-
 // TSpline represents a T-Spline surface.
 type TSpline struct {
 	ControlPoints []ControlPoint

@@ -4,6 +4,8 @@ import (
 	"errors"
 
 	"github.com/ElleScotZ/project-cs/internal/algebra"
+	"github.com/ElleScotZ/project-cs/internal/core"
+	"github.com/ElleScotZ/project-cs/pkg/io"
 )
 
 const (
@@ -12,6 +14,7 @@ const (
 
 // BSpline represents a B-Spline surface with degree = 3.
 type BSpline struct {
+	Knotvector         []float64
 	ControlPointMatrix [][]ControlPoint
 }
 
@@ -31,13 +34,16 @@ func (b *BSpline) SetNormalisedUniformKnotvectorsForClampedSurface() error {
 		switch {
 		case i < Degree+1:
 			knotvector[i] = 0.0
-		case i < numberOfCP-(Degree+1):
+		case i < numberOfCP:
 			knotvector[i] = delta * float64(i-Degree)
 		default:
 			knotvector[i] = 1.0
 		}
 	}
 
+	b.Knotvector = knotvector
+
+	// This is just an FYI. Probably will not be used.
 	for i := range b.ControlPointMatrix {
 		for j := range b.ControlPointMatrix[i] {
 			for k := 0; k < 5; k++ {
@@ -85,11 +91,11 @@ func calculateBasisFunction(knotvector []float64, iterBasis, iterDegree int, par
 	multiplierNC = 1 - multiplierNC
 
 	// Calculating previous iterations
-	basisPrevOrder, errPO := calculateBasisFunction(knotvector, iterBasis, iterDegree-1, parameter)
+	basisPrevDegree, errPO := calculateBasisFunction(knotvector, iterBasis, iterDegree-1, parameter)
 	basisNextControl, errNC := calculateBasisFunction(knotvector, iterBasis+1, iterDegree-1, parameter)
 
 	// Value of basis function at parameter.
-	basis := multiplierPO*basisPrevOrder + multiplierNC*basisNextControl
+	basis := multiplierPO*basisPrevDegree + multiplierNC*basisNextControl
 
 	if errPO != nil {
 		return basis, errPO
@@ -110,19 +116,12 @@ func (b *BSpline) CalculateRationalSurfacePoint(paramS, paramT float64) (algebra
 		var member algebra.Vector3D
 
 		for j := 0; j < len(b.ControlPointMatrix[i]); j++ {
-			var knotvectorS, knotvectorT = make([]float64, 5), make([]float64, 5)
-
-			for k := 0; k < 5; k++ {
-				knotvectorS[i] = b.ControlPointMatrix[i][j].Knotvector[k].Position[0]
-				knotvectorT[i] = b.ControlPointMatrix[i][j].Knotvector[k].Position[1]
-			}
-
-			basisS, err := calculateBasisFunction(knotvectorS, i, Degree, paramS)
+			basisS, err := calculateBasisFunction(b.Knotvector, i, Degree, paramS)
 			if err != nil {
 				return position, err
 			}
 
-			basisT, err := calculateBasisFunction(knotvectorT, j, Degree, paramT)
+			basisT, err := calculateBasisFunction(b.Knotvector, j, Degree, paramT)
 			if err != nil {
 				return position, err
 			}
@@ -134,4 +133,71 @@ func (b *BSpline) CalculateRationalSurfacePoint(paramS, paramT float64) (algebra
 	}
 
 	return position, nil
+}
+
+//
+func (b *BSpline) GenerateSurface(resolution [2]int, fileName string) error {
+	var mesh core.Mesh
+
+	parameters1 := core.DistributeInterval(resolution[0])
+	parameters2 := core.DistributeInterval(resolution[1])
+
+	// Creating vertices
+	for _, p1 := range parameters1 {
+		for _, p2 := range parameters2 {
+			point, err := b.CalculateRationalSurfacePoint(p1, p2)
+			if err != nil {
+				return err
+			}
+
+			mesh.Vertices = append(mesh.Vertices, core.Vertex{
+				Position: point,
+				Color:    algebra.Vector3D{Coordinates: [3]float64{0, 150, 0}},
+			})
+		}
+	}
+
+	// Creating faces
+	for i := 0; i < len(parameters1)-1; i++ {
+		for j := 0; j < len(parameters2)-1; j++ {
+			var (
+				face1, face2       core.Face
+				id1, id2, id3, id4 int
+			)
+
+			id1 = len(parameters2)*i + j
+			id2 = id1 + 1
+			id3 = id1 + len(parameters2)
+			id4 = id3 + 1
+
+			// Checking length of edge
+			distance14Vector := mesh.Vertices[id1].Position.Sub(mesh.Vertices[id4].Position)
+			distance14 := distance14Vector.Dot(distance14Vector)
+
+			distance23Vector := mesh.Vertices[id2].Position.Sub(mesh.Vertices[id3].Position)
+			distance23 := distance23Vector.Dot(distance23Vector)
+
+			if distance23 < distance14 {
+				id1, id2, id3, id4 = id2, id4, id1, id3
+			}
+
+			face1.Vertices = [3]int{id2, id1, id4}
+			face2.Vertices = [3]int{id4, id1, id3}
+
+			mesh.Faces = append(mesh.Faces, face1)
+			mesh.Faces = append(mesh.Faces, face2)
+		}
+	}
+
+	// Adding control points
+	for _, cpR := range b.ControlPointMatrix {
+		for _, cp := range cpR {
+			mesh.Vertices = append(mesh.Vertices, core.Vertex{
+				Position: cp.Position,
+				Color:    algebra.Vector3D{Coordinates: [3]float64{150, 0, 0}},
+			})
+		}
+	}
+
+	return io.ExportPLY(&mesh, fileName)
 }
