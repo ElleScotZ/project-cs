@@ -43,7 +43,7 @@ func main() {
 	cp[0].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.0, 1.0}},
-		{Position: [2]float64{0.0, 1.0}},
+		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
@@ -58,113 +58,113 @@ func main() {
 
 	cp[2].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{0.0, 1.0 / 3.0}},
-		{Position: [2]float64{0.0, 2.0 / 3.0}},
-		{Position: [2]float64{1.0 / 3.0, 1.0}},
-		{Position: [2]float64{2.0 / 3.0, 1.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{0.0, 1.0}},
+		{Position: [2]float64{0.0, 1.0}},
+		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[3].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{0.0, 1.0 / 3.0}},
-		{Position: [2]float64{1.0 / 3.0, 2.0 / 3.0}},
-		{Position: [2]float64{2.0 / 3.0, 1.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{0.0, 1.0}},
+		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[4].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{1.0 / 3.0, 0.0}},
-		{Position: [2]float64{2.0 / 3.0, 1.0 / 3.0}},
-		{Position: [2]float64{1.0, 2.0 / 3.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{1.0, 0.0}},
+		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[5].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{1.0 / 3.0, 0.0}},
-		{Position: [2]float64{2.0 / 3.0, 0.0}},
-		{Position: [2]float64{1.0, 1.0 / 3.0}},
-		{Position: [2]float64{1.0, 2.0 / 3.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{1.0, 0.0}},
+		{Position: [2]float64{1.0, 0.0}},
+		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[6].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{1.0 / 3.0, 0.0}},
-		{Position: [2]float64{2.0 / 3.0, 0.0}},
-		{Position: [2]float64{1.0, 1.0 / 3.0}},
-		{Position: [2]float64{1.0, 2.0 / 3.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{1.0, 0.0}},
+		{Position: [2]float64{1.0, 0.0}},
+		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[7].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{1.0 / 3.0, 0.0}},
-		{Position: [2]float64{2.0 / 3.0, 1.0 / 3.0}},
-		{Position: [2]float64{1.0, 2.0 / 3.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{1.0, 0.0}},
+		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[8].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{1.0 / 3.0, 1.0 / 3.0}},
-		{Position: [2]float64{2.0 / 3.0, 2.0 / 3.0}},
-		{Position: [2]float64{1.0, 1.00}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{1.0, 1.0}},
+		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[9].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{0.0, 1.0 / 3.0}},
-		{Position: [2]float64{0.0, 2.0 / 3.0}},
+		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.0, 1.0}},
-		{Position: [2]float64{1.0 / 3.0, 1.0}},
-		{Position: [2]float64{2.0 / 3.0, 1.0}},
+		{Position: [2]float64{0.0, 1.0}},
+		{Position: [2]float64{0.0, 1.0}},
+		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[10].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{1.0 / 3.0, 1.0 / 3.0}},
-		{Position: [2]float64{2.0 / 3.0, 2.0 / 3.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[11].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{1.0 / 3.0, 0.0}},
-		{Position: [2]float64{2.0 / 3.0, 0.0}},
+		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{1.0, 0.0}},
-		{Position: [2]float64{1.0, 1.0 / 3.0}},
-		{Position: [2]float64{1.0, 2.0 / 3.0}},
+		{Position: [2]float64{1.0, 0.0}},
+		{Position: [2]float64{1.0, 0.0}},
+		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[12].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{1.0 / 3.0, 1.0 / 3.0}},
-		{Position: [2]float64{2.0 / 3.0, 2.0 / 3.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[13].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{1.0 / 3.0, 0.0}},
-		{Position: [2]float64{2.0 / 3.0, 1.0 / 3.0}},
-		{Position: [2]float64{1.0, 2.0 / 3.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{1.0, 0.0}},
+		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[14].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{0.0, 1.0 / 3.0}},
-		{Position: [2]float64{1.0 / 3.0, 2.0 / 3.0}},
-		{Position: [2]float64{2.0 / 3.0, 1.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{0.0, 1.0}},
+		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[15].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{1.0 / 3.0, 1.0 / 3.0}},
-		{Position: [2]float64{2.0 / 3.0, 2.0 / 3.0}},
+		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{1.0, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
 
