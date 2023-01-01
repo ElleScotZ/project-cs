@@ -37,10 +37,10 @@ func TestBSplineSurface(t *testing.T) {
 	bspline.ControlPointMatrix = make([][]ControlPoint, 4)
 
 	for i := range bspline.ControlPointMatrix {
-		bspline.ControlPointMatrix[i] = make([]ControlPoint, 4)
+		bspline.ControlPointMatrix[3-i] = make([]ControlPoint, 4)
 
-		for j := range bspline.ControlPointMatrix[i] {
-			bspline.ControlPointMatrix[i][j].Position = cp[4*i+j].Position
+		for j := range bspline.ControlPointMatrix[3-i] {
+			bspline.ControlPointMatrix[3-i][j].Position = cp[4*i+j].Position
 		}
 	}
 

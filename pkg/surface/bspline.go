@@ -14,7 +14,8 @@ const (
 
 // BSpline represents a B-Spline surface with degree = 3.
 type BSpline struct {
-	Knotvector         []float64
+	KnotvectorRow      []float64
+	KnotvectorColumn   []float64
 	ControlPointMatrix [][]ControlPoint
 }
 
@@ -24,34 +25,38 @@ func (b *BSpline) SetNormalisedUniformKnotvectorsForClampedSurface() error {
 		return errors.New("b.ControlPointMatrix dimension(s) 0")
 	}
 
-	numberOfCP := len(b.ControlPointMatrix[0]) * len(b.ControlPointMatrix)
+	deltaRow := 1.0 / float64(len(b.ControlPointMatrix)-Degree)
+	deltaColumn := 1.0 / float64(len(b.ControlPointMatrix[0])-Degree)
 
-	delta := 1.0 / float64(numberOfCP-Degree)
+	var (
+		knotvectorRow    = make([]float64, (Degree+1)+len(b.ControlPointMatrix))
+		knotvectorColumn = make([]float64, (Degree+1)+len(b.ControlPointMatrix[0]))
+	)
 
-	var knotvector = make([]float64, (Degree+1)+numberOfCP)
-
-	for i := range knotvector {
+	for i := range knotvectorRow {
 		switch {
 		case i < Degree+1:
-			knotvector[i] = 0.0
-		case i < numberOfCP:
-			knotvector[i] = delta * float64(i-Degree)
+			knotvectorRow[i] = 0.0
+		case i < len(b.ControlPointMatrix):
+			knotvectorRow[i] = deltaRow * float64(i-Degree)
 		default:
-			knotvector[i] = 1.0
+			knotvectorRow[i] = 1.0
 		}
 	}
 
-	b.Knotvector = knotvector
-
-	// This is just an FYI. Probably will not be used.
-	for i := range b.ControlPointMatrix {
-		for j := range b.ControlPointMatrix[i] {
-			for k := 0; k < 5; k++ {
-				b.ControlPointMatrix[i][j].Knotvector[k].Position[0] = knotvector[i*len(b.ControlPointMatrix)+j+k]
-				b.ControlPointMatrix[i][j].Knotvector[k].Position[1] = knotvector[i*len(b.ControlPointMatrix)+j+k]
-			}
+	for i := range knotvectorColumn {
+		switch {
+		case i < Degree+1:
+			knotvectorColumn[i] = 0.0
+		case i < len(b.ControlPointMatrix[0]):
+			knotvectorColumn[i] = deltaColumn * float64(i-Degree)
+		default:
+			knotvectorColumn[i] = 1.0
 		}
 	}
+
+	b.KnotvectorRow = knotvectorRow
+	b.KnotvectorColumn = knotvectorColumn
 
 	return nil
 }
@@ -116,12 +121,12 @@ func (b *BSpline) CalculateRationalSurfacePoint(paramS, paramT float64) (algebra
 		var member algebra.Vector3D
 
 		for j := 0; j < len(b.ControlPointMatrix[i]); j++ {
-			basisS, err := calculateBasisFunction(b.Knotvector, i, Degree, paramS)
+			basisS, err := calculateBasisFunction(b.KnotvectorRow, i, Degree, paramS)
 			if err != nil {
 				return position, err
 			}
 
-			basisT, err := calculateBasisFunction(b.Knotvector, j, Degree, paramT)
+			basisT, err := calculateBasisFunction(b.KnotvectorColumn, j, Degree, paramT)
 			if err != nil {
 				return position, err
 			}
