@@ -4,9 +4,13 @@ import (
 	"testing"
 
 	"github.com/ElleScotZ/project-cs/internal/algebra"
+	"github.com/ElleScotZ/project-cs/internal/core"
+	"github.com/ElleScotZ/project-cs/pkg/io"
 )
 
 func TestBSplineSurface(t *testing.T) {
+	t.Parallel()
+
 	var (
 		bspline BSpline
 		cp      [16]ControlPoint
@@ -47,6 +51,28 @@ func TestBSplineSurface(t *testing.T) {
 	bspline.SetNormalisedUniformKnotvectorsForClampedSurface()
 
 	err := bspline.GenerateSurface([2]int{50, 50}, "saddle_bspline")
+	if err != nil {
+		t.Error(err)
+	}
+}
+
+func TestBSplineBasis(t *testing.T) {
+	t.Parallel()
+
+	var m core.Mesh
+
+	parameters := core.DistributeInterval(100)
+
+	for _, p := range parameters {
+		basis, err := calculateBasisFunction([]float64{0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6}, 3, 1, p)
+		if err != nil {
+			t.Error(err)
+		}
+
+		m.Vertices = append(m.Vertices, core.Vertex{Position: algebra.Vector3D{Coordinates: [3]float64{p, basis, 0.0}}})
+	}
+
+	err := io.ExportPLY(&m, "basis")
 	if err != nil {
 		t.Error(err)
 	}
