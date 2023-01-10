@@ -64,12 +64,12 @@ func TestBSplineBasis(t *testing.T) {
 	parameters := core.DistributeInterval(100)
 
 	for _, p := range parameters {
-		basis, err := calculateBasisFunction([]float64{0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6}, 3, 1, p)
+		basis, err := calculateBasisFunction([]float64{0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0}, 3, 3, p*2)
 		if err != nil {
 			t.Error(err)
 		}
 
-		m.Vertices = append(m.Vertices, core.Vertex{Position: algebra.Vector3D{Coordinates: [3]float64{p, basis, 0.0}}})
+		m.Vertices = append(m.Vertices, core.Vertex{Position: algebra.Vector3D{Coordinates: [3]float64{p * 2, basis, 0.0}}})
 	}
 
 	err := io.ExportPLY(&m, "basis")
