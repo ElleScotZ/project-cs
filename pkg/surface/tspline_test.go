@@ -55,7 +55,7 @@ func TestSplineCurve(t *testing.T) {
 
 	tspline.ControlPoints = append(tspline.ControlPoints, cp[:]...)
 
-	err := tspline.GenerateSurface([2]int{1, 1}, "curve")
+	err := tspline.GenerateSurface([2]int{50, 50}, "curve")
 	if err != nil {
 		t.Error(err)
 	}
