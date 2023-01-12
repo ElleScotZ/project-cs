@@ -77,3 +77,46 @@ func TestBSplineBasis(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func TestBSplineSurfaceExample(t *testing.T) {
+	t.Parallel()
+
+	var (
+		bspline BSpline
+		cp      [16]ControlPoint
+	)
+
+	cp[15].Position = algebra.Vector3D{Coordinates: [3]float64{0.0, 0.0, 0.0}}
+	cp[1].Position = algebra.Vector3D{Coordinates: [3]float64{0.33, 0.0, 0.0}}
+	cp[2].Position = algebra.Vector3D{Coordinates: [3]float64{0.67, 0.0, 0.0}}
+	cp[3].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 0.0, 0.0}}
+	cp[4].Position = algebra.Vector3D{Coordinates: [3]float64{0.0, 0.33, 0.0}}
+	cp[5].Position = algebra.Vector3D{Coordinates: [3]float64{0.33, 0.33, 0.50}}
+	cp[6].Position = algebra.Vector3D{Coordinates: [3]float64{0.67, 0.33, 0.50}}
+	cp[7].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 0.33, 0.0}}
+	cp[8].Position = algebra.Vector3D{Coordinates: [3]float64{0.0, 0.67, 0.0}}
+	cp[9].Position = algebra.Vector3D{Coordinates: [3]float64{0.33, 0.67, 0.50}}
+	cp[10].Position = algebra.Vector3D{Coordinates: [3]float64{0.67, 0.67, 0.50}}
+	cp[11].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 0.67, 0.0}}
+	cp[12].Position = algebra.Vector3D{Coordinates: [3]float64{0.0, 1.0, 0.0}}
+	cp[13].Position = algebra.Vector3D{Coordinates: [3]float64{0.33, 1.0, 0.0}}
+	cp[14].Position = algebra.Vector3D{Coordinates: [3]float64{0.67, 1.0, 0.0}}
+	cp[0].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 1.0, 0.0}}
+
+	bspline.ControlPointMatrix = make([][]ControlPoint, 4)
+
+	for i := range bspline.ControlPointMatrix {
+		bspline.ControlPointMatrix[i] = make([]ControlPoint, 4)
+
+		for j := range bspline.ControlPointMatrix[i] {
+			bspline.ControlPointMatrix[i][j].Position = cp[4*i+j].Position
+		}
+	}
+
+	bspline.SetNormalisedUniformKnotvectorsForClampedSurface()
+
+	err := bspline.GenerateSurface([2]int{50, 50}, "bspline_surface")
+	if err != nil {
+		t.Error(err)
+	}
+}
