@@ -86,7 +86,7 @@ func TestBSplineSurfaceExample(t *testing.T) {
 		cp      [16]ControlPoint
 	)
 
-	cp[15].Position = algebra.Vector3D{Coordinates: [3]float64{0.0, 0.0, 0.0}}
+	cp[0].Position = algebra.Vector3D{Coordinates: [3]float64{0.0, 0.0, 0.0}}
 	cp[1].Position = algebra.Vector3D{Coordinates: [3]float64{0.33, 0.0, 0.0}}
 	cp[2].Position = algebra.Vector3D{Coordinates: [3]float64{0.67, 0.0, 0.0}}
 	cp[3].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 0.0, 0.0}}
@@ -101,7 +101,7 @@ func TestBSplineSurfaceExample(t *testing.T) {
 	cp[12].Position = algebra.Vector3D{Coordinates: [3]float64{0.0, 1.0, 0.0}}
 	cp[13].Position = algebra.Vector3D{Coordinates: [3]float64{0.33, 1.0, 0.0}}
 	cp[14].Position = algebra.Vector3D{Coordinates: [3]float64{0.67, 1.0, 0.0}}
-	cp[0].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 1.0, 0.0}}
+	cp[15].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 1.0, 0.0}}
 
 	bspline.ControlPointMatrix = make([][]ControlPoint, 4)
 
