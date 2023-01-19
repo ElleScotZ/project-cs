@@ -119,24 +119,3 @@ func (t *TSpline) GenerateSurface(resolution [2]int, fileName string) error {
 
 	return io.ExportPLY(&mesh, fileName)
 }
-
-//
-func (t *TSpline) GenerateTMesh(fileName string) error {
-	var mesh core.Mesh
-
-	for _, cp := range t.ControlPoints {
-		mesh.Vertices = append(mesh.Vertices, core.Vertex{
-			Position: cp.Position,
-			Color:    algebra.Vector3D{Coordinates: [3]float64{150, 0, 0}},
-		})
-	}
-
-	for _, cp := range t.ControlPoints {
-		mesh.Vertices = append(mesh.Vertices, core.Vertex{
-			Position: algebra.Vector3D{Coordinates: [3]float64{cp.Knotvector[2].Position[0], cp.Knotvector[2].Position[1], 0}},
-			Color:    algebra.Vector3D{Coordinates: [3]float64{0, 0, 150}},
-		})
-	}
-
-	return io.ExportPLY(&mesh, fileName)
-}
