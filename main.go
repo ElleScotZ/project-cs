@@ -1464,47 +1464,245 @@ func saddle7c(cp [9]surface.ControlPoint) {
 }
 
 func main() {
-	// Creating control points for saddle
-	var (
-		mesh core.Mesh
-		cp   [9]surface.ControlPoint
-	)
+	// Saddle
+	{
+		var (
+			mesh core.Mesh
+			cp   [9]surface.ControlPoint
+		)
 
-	cp[0].Position = algebra.Vector3D{Coordinates: [3]float64{-1.0, 0.0, 5.0}}
-	cp[1].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 0.0, 5.0}}
-	cp[2].Position = algebra.Vector3D{Coordinates: [3]float64{2.50, 1.50, 0.0}}
-	cp[3].Position = algebra.Vector3D{Coordinates: [3]float64{2.50, 3.50, 0.0}}
-	cp[4].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 5.0, 5.0}}
-	cp[5].Position = algebra.Vector3D{Coordinates: [3]float64{-1.0, 5.0, 5.0}}
-	cp[6].Position = algebra.Vector3D{Coordinates: [3]float64{-2.50, 3.50, 0.0}}
-	cp[7].Position = algebra.Vector3D{Coordinates: [3]float64{-2.50, 1.50, 0.0}}
-	cp[8].Position = algebra.Vector3D{Coordinates: [3]float64{0.0, 2.50, 5.0}}
+		cp[0].Position = algebra.Vector3D{Coordinates: [3]float64{-1.0, 0.0, 5.0}}
+		cp[1].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 0.0, 5.0}}
+		cp[2].Position = algebra.Vector3D{Coordinates: [3]float64{2.50, 1.50, 0.0}}
+		cp[3].Position = algebra.Vector3D{Coordinates: [3]float64{2.50, 3.50, 0.0}}
+		cp[4].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 5.0, 5.0}}
+		cp[5].Position = algebra.Vector3D{Coordinates: [3]float64{-1.0, 5.0, 5.0}}
+		cp[6].Position = algebra.Vector3D{Coordinates: [3]float64{-2.50, 3.50, 0.0}}
+		cp[7].Position = algebra.Vector3D{Coordinates: [3]float64{-2.50, 1.50, 0.0}}
+		cp[8].Position = algebra.Vector3D{Coordinates: [3]float64{0.0, 2.50, 5.0}}
 
-	for i := range cp {
-		mesh.Vertices = append(mesh.Vertices, core.Vertex{
-			Position: cp[i].Position,
-			Color:    algebra.Vector3D{Coordinates: [3]float64{150, 0, 0}},
-		})
+		for i := range cp {
+			mesh.Vertices = append(mesh.Vertices, core.Vertex{
+				Position: cp[i].Position,
+				Color:    algebra.Vector3D{Coordinates: [3]float64{150, 0, 0}},
+			})
+		}
+
+		io.ExportPLY(&mesh, "controlpoints")
+
+		saddle1a(cp)
+		saddle1b(cp)
+		saddle2a(cp)
+		saddle2b(cp)
+		saddle3a(cp)
+		saddle3b(cp)
+		saddle3c(cp)
+		saddle4a([8]surface.ControlPoint{cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]})
+		saddle4b(cp)
+		saddle4c(cp)
+		saddle5a([8]surface.ControlPoint{cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]})
+		saddle5b(cp)
+		saddle6a([8]surface.ControlPoint{cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]})
+		saddle6b([8]surface.ControlPoint{cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]})
+		saddle6c([8]surface.ControlPoint{cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]})
+		saddle7a(cp)
+		saddle7b(cp)
+		saddle7c(cp)
 	}
 
-	io.ExportPLY(&mesh, "controlpoints")
+	// Pringles
+	{
+		var (
+			mesh core.Mesh
+			cp   [16]surface.ControlPoint
+		)
 
-	saddle1a(cp)
-	saddle1b(cp)
-	saddle2a(cp)
-	saddle2b(cp)
-	saddle3a(cp)
-	saddle3b(cp)
-	saddle3c(cp)
-	saddle4a([8]surface.ControlPoint{cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]})
-	saddle4b(cp)
-	saddle4c(cp)
-	saddle5a([8]surface.ControlPoint{cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]})
-	saddle5b(cp)
-	saddle6a([8]surface.ControlPoint{cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]})
-	saddle6b([8]surface.ControlPoint{cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]})
-	saddle6c([8]surface.ControlPoint{cp[0], cp[1], cp[2], cp[3], cp[4], cp[5], cp[6], cp[7]})
-	saddle7a(cp)
-	saddle7b(cp)
-	saddle7c(cp)
+		cp[0].Position = algebra.Vector3D{Coordinates: [3]float64{-1.75, 0.75, 3.25}}
+		cp[1].Position = algebra.Vector3D{Coordinates: [3]float64{-1.0, 0.0, 5.0}}
+		cp[2].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 0.0, 5.0}}
+		cp[3].Position = algebra.Vector3D{Coordinates: [3]float64{1.75, 0.75, 3.25}}
+		cp[4].Position = algebra.Vector3D{Coordinates: [3]float64{-2.50, 1.5, 2.0}}
+		cp[5].Position = algebra.Vector3D{Coordinates: [3]float64{-1.0, 1.65, 4.0}}
+		cp[6].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 1.65, 4.0}}
+		cp[7].Position = algebra.Vector3D{Coordinates: [3]float64{2.50, 1.50, 2.0}}
+		cp[8].Position = algebra.Vector3D{Coordinates: [3]float64{-2.50, 3.5, 2.0}}
+		cp[9].Position = algebra.Vector3D{Coordinates: [3]float64{-1.0, 3.35, 4.0}}
+		cp[10].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 3.35, 4.0}}
+		cp[11].Position = algebra.Vector3D{Coordinates: [3]float64{2.50, 3.50, 2.0}}
+		cp[12].Position = algebra.Vector3D{Coordinates: [3]float64{-1.75, 4.25, 3.25}}
+		cp[13].Position = algebra.Vector3D{Coordinates: [3]float64{-1.0, 5.0, 5.0}}
+		cp[14].Position = algebra.Vector3D{Coordinates: [3]float64{1.0, 5.0, 5.0}}
+		cp[15].Position = algebra.Vector3D{Coordinates: [3]float64{1.75, 4.25, 3.25}}
+
+		for i := range cp {
+			mesh.Vertices = append(mesh.Vertices, core.Vertex{
+				Position: cp[i].Position,
+				Color:    algebra.Vector3D{Coordinates: [3]float64{150, 0, 0}},
+			})
+		}
+
+		io.ExportPLY(&mesh, "pringle_controlpoints")
+
+		// B-spline
+		{
+			var bspline surface.BSpline
+
+			bspline.ControlPointMatrix = make([][]surface.ControlPoint, 4)
+
+			for i := range bspline.ControlPointMatrix {
+				bspline.ControlPointMatrix[3-i] = make([]surface.ControlPoint, 4)
+
+				for j := range bspline.ControlPointMatrix[3-i] {
+					bspline.ControlPointMatrix[3-i][j].Position = cp[4*i+j].Position
+				}
+			}
+
+			bspline.SetNormalisedUniformKnotvectorsForClampedSurface()
+
+			err := bspline.GenerateSurface([2]int{50, 50}, "pringle_bspline")
+			if err != nil {
+				log.Print(err)
+			}
+		}
+
+		// T-spline
+		{
+			var tspline surface.TSpline
+
+			cp[0].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[1].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{1.0, 0.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[2].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{1.0, 0.0}},
+				{Position: [2]float64{1.0, 0.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[3].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{1.0, 0.0}},
+				{Position: [2]float64{1.0, 0.0}},
+				{Position: [2]float64{1.0, 0.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[4].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[5].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[6].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{1.0, 0.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[7].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{1.0, 0.0}},
+				{Position: [2]float64{1.0, 0.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[8].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 1.0}},
+				{Position: [2]float64{0.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[9].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[10].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[11].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{1.0, 0.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[12].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 1.0}},
+				{Position: [2]float64{0.0, 1.0}},
+				{Position: [2]float64{0.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[13].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 1.0}},
+				{Position: [2]float64{0.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[14].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{0.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			cp[15].Knotvector = [5]surface.Knot{
+				{Position: [2]float64{0.0, 0.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+				{Position: [2]float64{1.0, 1.0}},
+			}
+
+			tspline.ControlPoints = append(tspline.ControlPoints, cp[:]...)
+
+			err := tspline.GenerateSurface([2]int{50, 50}, "pringle_tspline")
+			if err != nil {
+				log.Print(err)
+			}
+		}
+	}
 }
