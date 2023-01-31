@@ -1,8 +1,6 @@
 package surface
 
 import (
-	"math"
-
 	"github.com/ElleScotZ/project-cs/internal/algebra"
 	"github.com/ElleScotZ/project-cs/internal/core"
 	"github.com/ElleScotZ/project-cs/pkg/io"
@@ -122,16 +120,14 @@ func (t *TSpline) GenerateSurface(resolution [2]int, fileName string) error {
 	// Creating parametric mesh
 	var parametricMesh core.Mesh
 
-	for i, cp := range t.ControlPoints {
-		for j, k := range cp.Knotvector {
-			parametricMesh.Vertices = append(parametricMesh.Vertices, core.Vertex{
-				Position: algebra.Vector3D{Coordinates: [3]float64{k.Position[0], k.Position[1], float64(i)}},
-				Color:    algebra.Vector3D{Coordinates: [3]float64{25 * float64(i), math.Abs(float64(j)-2.0) * 50, 0}},
-			})
-		}
+	for _, cp := range t.ControlPoints {
+		parametricMesh.Vertices = append(parametricMesh.Vertices, core.Vertex{
+			Position: algebra.Vector3D{Coordinates: [3]float64{cp.Knotvector[2].Position[0], cp.Knotvector[2].Position[1], 0.0}},
+			Color:    algebra.Vector3D{Coordinates: [3]float64{0, 0, 150}},
+		})
 	}
 
-	if err := io.ExportPLY(&parametricMesh, fileName+"_grid"); err != nil {
+	if err := io.ExportPLY(&parametricMesh, fileName+"_parametric"); err != nil {
 		return err
 	}
 
