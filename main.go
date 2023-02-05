@@ -431,13 +431,13 @@ func saddle3b(cp [9]surface.ControlPoint) {
 		{Position: [2]float64{0.0, 0.33}},
 		{Position: [2]float64{0.33, 0.67}},
 		{Position: [2]float64{0.67, 1.0}},
-		{Position: [2]float64{0.85, 1.0}},
+		{Position: [2]float64{0.67, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
 
 	cp[1].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.33}},
-		{Position: [2]float64{0.15, 0.67}},
+		{Position: [2]float64{0.33, 0.67}},
 		{Position: [2]float64{0.33, 1.0}},
 		{Position: [2]float64{0.67, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
@@ -447,13 +447,13 @@ func saddle3b(cp [9]surface.ControlPoint) {
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.0, 0.33}},
 		{Position: [2]float64{0.0, 0.67}},
-		{Position: [2]float64{0.33, 0.85}},
+		{Position: [2]float64{0.33, 0.67}},
 		{Position: [2]float64{0.67, 1.0}},
 	}
 
 	cp[3].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{0.0, 0.15}},
+		{Position: [2]float64{0.0, 0.33}},
 		{Position: [2]float64{0.0, 0.33}},
 		{Position: [2]float64{0.33, 0.67}},
 		{Position: [2]float64{0.67, 1.0}},
@@ -461,7 +461,7 @@ func saddle3b(cp [9]surface.ControlPoint) {
 
 	cp[4].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{0.15, 0.0}},
+		{Position: [2]float64{0.33, 0.0}},
 		{Position: [2]float64{0.33, 0.0}},
 		{Position: [2]float64{0.67, 0.33}},
 		{Position: [2]float64{1.0, 0.67}},
@@ -471,13 +471,13 @@ func saddle3b(cp [9]surface.ControlPoint) {
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.33, 0.0}},
 		{Position: [2]float64{0.67, 0.0}},
-		{Position: [2]float64{0.85, 0.33}},
+		{Position: [2]float64{0.67, 0.33}},
 		{Position: [2]float64{1.0, 0.67}},
 	}
 
 	cp[6].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.33, 0.0}},
-		{Position: [2]float64{0.67, 0.15}},
+		{Position: [2]float64{0.67, 0.33}},
 		{Position: [2]float64{1.0, 0.33}},
 		{Position: [2]float64{1.0, 0.67}},
 		{Position: [2]float64{1.0, 1.0}},
@@ -487,7 +487,7 @@ func saddle3b(cp [9]surface.ControlPoint) {
 		{Position: [2]float64{0.33, 0.0}},
 		{Position: [2]float64{0.67, 0.33}},
 		{Position: [2]float64{1.0, 0.67}},
-		{Position: [2]float64{1.0, 0.85}},
+		{Position: [2]float64{1.0, 0.67}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
 
@@ -1068,7 +1068,7 @@ func saddle6b(cp [8]surface.ControlPoint) {
 	var tspline surface.TSpline
 
 	cp[0].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{0.33, 0.50}},
+		{Position: [2]float64{0.33, 0.33}},
 		{Position: [2]float64{0.50, 0.67}},
 		{Position: [2]float64{0.67, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
@@ -1076,7 +1076,7 @@ func saddle6b(cp [8]surface.ControlPoint) {
 	}
 
 	cp[1].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{0.0, 0.50}},
+		{Position: [2]float64{0.0, 0.33}},
 		{Position: [2]float64{0.0, 0.67}},
 		{Position: [2]float64{0.33, 1.0}},
 		{Position: [2]float64{0.50, 1.0}},
@@ -1088,7 +1088,7 @@ func saddle6b(cp [8]surface.ControlPoint) {
 		{Position: [2]float64{0.0, 0.50}},
 		{Position: [2]float64{0.0, 0.67}},
 		{Position: [2]float64{0.33, 1.0}},
-		{Position: [2]float64{0.50, 1.0}},
+		{Position: [2]float64{0.67, 1.0}},
 	}
 
 	cp[3].Knotvector = [5]surface.Knot{
@@ -1096,7 +1096,7 @@ func saddle6b(cp [8]surface.ControlPoint) {
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.0, 0.33}},
 		{Position: [2]float64{0.33, 0.50}},
-		{Position: [2]float64{0.50, 0.67}},
+		{Position: [2]float64{0.67, 0.67}},
 	}
 
 	cp[4].Knotvector = [5]surface.Knot{
@@ -1104,7 +1104,7 @@ func saddle6b(cp [8]surface.ControlPoint) {
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.33, 0.0}},
 		{Position: [2]float64{0.50, 0.33}},
-		{Position: [2]float64{0.67, 0.50}},
+		{Position: [2]float64{0.67, 0.67}},
 	}
 
 	cp[5].Knotvector = [5]surface.Knot{
@@ -1112,11 +1112,11 @@ func saddle6b(cp [8]surface.ControlPoint) {
 		{Position: [2]float64{0.50, 0.0}},
 		{Position: [2]float64{0.67, 0.0}},
 		{Position: [2]float64{1.0, 0.33}},
-		{Position: [2]float64{1.0, 0.50}},
+		{Position: [2]float64{1.0, 0.67}},
 	}
 
 	cp[6].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{0.50, 0.0}},
+		{Position: [2]float64{0.33, 0.0}},
 		{Position: [2]float64{0.67, 0.0}},
 		{Position: [2]float64{1.0, 0.33}},
 		{Position: [2]float64{1.0, 0.50}},
@@ -1124,7 +1124,7 @@ func saddle6b(cp [8]surface.ControlPoint) {
 	}
 
 	cp[7].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{0.50, 0.33}},
+		{Position: [2]float64{0.33, 0.33}},
 		{Position: [2]float64{0.67, 0.50}},
 		{Position: [2]float64{1.0, 0.67}},
 		{Position: [2]float64{1.0, 1.0}},
@@ -1143,7 +1143,7 @@ func saddle6c(cp [8]surface.ControlPoint) {
 	var tspline surface.TSpline
 
 	cp[0].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{0.45, 0.45}},
+		{Position: [2]float64{0.45, 0.33}},
 		{Position: [2]float64{0.55, 0.67}},
 		{Position: [2]float64{0.67, 1.0}},
 		{Position: [2]float64{1.0, 1.0}},
@@ -1151,7 +1151,7 @@ func saddle6c(cp [8]surface.ControlPoint) {
 	}
 
 	cp[1].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{0.0, 0.45}},
+		{Position: [2]float64{0.0, 0.33}},
 		{Position: [2]float64{0.0, 0.67}},
 		{Position: [2]float64{0.33, 1.0}},
 		{Position: [2]float64{0.45, 1.0}},
@@ -1163,7 +1163,7 @@ func saddle6c(cp [8]surface.ControlPoint) {
 		{Position: [2]float64{0.0, 0.55}},
 		{Position: [2]float64{0.0, 0.67}},
 		{Position: [2]float64{0.33, 1.0}},
-		{Position: [2]float64{0.45, 1.0}},
+		{Position: [2]float64{0.67, 1.0}},
 	}
 
 	cp[3].Knotvector = [5]surface.Knot{
@@ -1171,7 +1171,7 @@ func saddle6c(cp [8]surface.ControlPoint) {
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.0, 0.33}},
 		{Position: [2]float64{0.33, 0.45}},
-		{Position: [2]float64{0.45, 0.55}},
+		{Position: [2]float64{0.67, 0.55}},
 	}
 
 	cp[4].Knotvector = [5]surface.Knot{
@@ -1179,7 +1179,7 @@ func saddle6c(cp [8]surface.ControlPoint) {
 		{Position: [2]float64{0.0, 0.0}},
 		{Position: [2]float64{0.33, 0.0}},
 		{Position: [2]float64{0.45, 0.33}},
-		{Position: [2]float64{0.55, 0.45}},
+		{Position: [2]float64{0.55, 0.67}},
 	}
 
 	cp[5].Knotvector = [5]surface.Knot{
@@ -1187,11 +1187,11 @@ func saddle6c(cp [8]surface.ControlPoint) {
 		{Position: [2]float64{0.55, 0.0}},
 		{Position: [2]float64{0.67, 0.0}},
 		{Position: [2]float64{1.0, 0.33}},
-		{Position: [2]float64{1.0, 0.45}},
+		{Position: [2]float64{1.0, 0.67}},
 	}
 
 	cp[6].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{0.55, 0.0}},
+		{Position: [2]float64{0.33, 0.0}},
 		{Position: [2]float64{0.67, 0.0}},
 		{Position: [2]float64{1.0, 0.33}},
 		{Position: [2]float64{1.0, 0.45}},
@@ -1199,7 +1199,7 @@ func saddle6c(cp [8]surface.ControlPoint) {
 	}
 
 	cp[7].Knotvector = [5]surface.Knot{
-		{Position: [2]float64{0.55, 0.45}},
+		{Position: [2]float64{0.33, 0.45}},
 		{Position: [2]float64{0.67, 0.55}},
 		{Position: [2]float64{1.0, 0.67}},
 		{Position: [2]float64{1.0, 1.0}},
