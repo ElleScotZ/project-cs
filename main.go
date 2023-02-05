@@ -1366,9 +1366,9 @@ func saddle7b(cp [9]surface.ControlPoint) {
 
 	cp[8].Knotvector = [5]surface.Knot{
 		{Position: [2]float64{0.0, 0.0}},
-		{Position: [2]float64{0.0, 0.0}},
+		{Position: [2]float64{0.33, 0.33}},
 		{Position: [2]float64{0.50, 0.50}},
-		{Position: [2]float64{1.0, 1.0}},
+		{Position: [2]float64{0.67, 0.67}},
 		{Position: [2]float64{1.0, 1.0}},
 	}
 
