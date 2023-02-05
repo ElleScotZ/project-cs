@@ -11,7 +11,7 @@ type TSpline struct {
 	ControlPoints []ControlPoint
 }
 
-// calculateBlendingFunction
+// calculateBlendingFunction calculates the bleding function for T-spline.
 func calculateBlendingFunction(knotvector [5]Knot, paramS, paramT float64) (float64, error) {
 	var knotVectorS, knotVectorT = make([]float64, 5), make([]float64, 5)
 
@@ -55,7 +55,9 @@ func (t *TSpline) CalculateTSplineSurfacePoint(paramS, paramT float64) (algebra.
 	return position, nil
 }
 
-//
+// GenerateSurface writes out a PLY file of a mesh with fileName.
+// resolution: n x m number of vertices in mesh.
+// It also writes out a PLY file of the T-mesh with fileName_parametric.
 func (t *TSpline) GenerateSurface(resolution [2]int, fileName string) error {
 	var mesh core.Mesh
 

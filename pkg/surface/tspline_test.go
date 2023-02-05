@@ -134,7 +134,7 @@ func TestSplineSurface(t *testing.T) {
 
 	tspline.ControlPoints = append(tspline.ControlPoints, cp[:]...)
 
-	err := tspline.GenerateSurface([2]int{50, 50}, "surface")
+	err := tspline.GenerateSurface([2]int{50, 50}, "tspline")
 	if err != nil {
 		t.Error(err)
 	}

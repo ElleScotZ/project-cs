@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	//
+	// outFolder is the string for the out folder.
 	outFolder = "out/"
 )
 
@@ -169,7 +169,8 @@ func ImportPLY(fileName string) (*core.Mesh, error) {
 	return &mesh, nil
 }
 
-// ExportPLY method writes out PLY files with fileName.
+// ExportPLY method writes out ASCII PLY files with fileName.
+// Open file with Print 3D, Meshlab, Meshmixer.
 func ExportPLY(m *core.Mesh, fileName string) error {
 	err := os.MkdirAll("out", os.ModePerm)
 	if err != nil {

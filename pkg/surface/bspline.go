@@ -9,6 +9,7 @@ import (
 )
 
 const (
+	// Degree is the degree of basis function.
 	Degree = 3
 )
 
@@ -19,7 +20,7 @@ type BSpline struct {
 	ControlPointMatrix [][]ControlPoint
 }
 
-//
+// SetNormalisedUniformKnotvectorsForClampedSurface sets up the knot vector for B-spline.
 func (b *BSpline) SetNormalisedUniformKnotvectorsForClampedSurface() error {
 	if len(b.ControlPointMatrix) == 0 || len(b.ControlPointMatrix[0]) == 0 {
 		return errors.New("b.ControlPointMatrix dimension(s) 0")
@@ -61,7 +62,7 @@ func (b *BSpline) SetNormalisedUniformKnotvectorsForClampedSurface() error {
 	return nil
 }
 
-// getBasisMultiplier
+// getBasisMultiplier is an auxiliary function for calcualteBasisFunction.
 func getBasisMultiplier(knotvector []float64, iterBasis, iterDegree int, parameter float64) float64 {
 	if iterBasis+iterDegree >= len(knotvector) {
 		return 1
@@ -77,7 +78,8 @@ func getBasisMultiplier(knotvector []float64, iterBasis, iterDegree int, paramet
 	return 0
 }
 
-// calculateBasisFunction
+// calculateBasisFunction calculates the value of the basis function with
+// iterBasis and iterDegree indices at parameter.
 func calculateBasisFunction(knotvector []float64, iterBasis, iterDegree int, parameter float64) (float64, error) {
 	if iterBasis < 0 || iterDegree < 0 {
 		return -1, errors.New("calculateBasisFunction with wrong iterBasis or iterDegree")
@@ -109,7 +111,8 @@ func calculateBasisFunction(knotvector []float64, iterBasis, iterDegree int, par
 	return basis, errNC
 }
 
-//
+// CalculateRationalSurfacePoint calculates a respective position of a vertex
+// with paramS and paramT parameters substituted.
 func (b *BSpline) CalculateRationalSurfacePoint(paramS, paramT float64) (algebra.Vector3D, error) {
 	var position algebra.Vector3D
 
@@ -140,7 +143,8 @@ func (b *BSpline) CalculateRationalSurfacePoint(paramS, paramT float64) (algebra
 	return position, nil
 }
 
-//
+// GenerateSurface writes out a PLY file of a mesh with fileName.
+// resolution: n x m number of vertices in mesh.
 func (b *BSpline) GenerateSurface(resolution [2]int, fileName string) error {
 	var mesh core.Mesh
 
