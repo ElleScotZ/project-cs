@@ -7,4 +7,4 @@ How to run the code once you cloned it and have Go downloaded in your computer:
 4. Open /out folder.
 5. Open PLY files with Print 3D (default Windows app), or Meshlab, Meshmixer, etc.
 
-Research essay on T-splines: " essay on t-splines.pdf "
+Research essay on T-splines: "essay on t-splines.pdf"
