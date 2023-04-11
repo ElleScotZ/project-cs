@@ -1,3 +1,5 @@
+This repository was created for a computer science project module.
+
 How to run the code once you cloned it and have Go downloaded in your computer:
 
 1. Open a terminal.
