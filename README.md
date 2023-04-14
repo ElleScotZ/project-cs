@@ -1,4 +1,4 @@
-# This repository was created for a computer science project module.
+# This repository was created as a computer science project.
 
 About:
 
